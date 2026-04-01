@@ -204,6 +204,8 @@ export default function GraffitiCanvas() {
   };
 
   useEffect(() => {
+    const supportsDeviceOrientation = typeof DeviceOrientationEvent !== "undefined";
+
     const handleOrientation = (e: DeviceOrientationEvent) => {
         if (e.gamma !== null && e.beta !== null) {
             tiltRef.current = { x: e.gamma, y: e.beta };
@@ -233,7 +235,7 @@ export default function GraffitiCanvas() {
 
     const handleMouseMove = (e: MouseEvent) => {
         // Fallback for desktop
-        if (!('DeviceOrientationEvent' in window)) {
+        if (!supportsDeviceOrientation) {
             const cx = window.innerWidth / 2;
             const cy = window.innerHeight / 2;
             tiltRef.current = {
